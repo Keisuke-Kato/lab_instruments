@@ -1,4 +1,3 @@
-from numpy.core.arrayprint import BoolFormat
 import pyvisa as visa
 
 rm = visa.ResourceManager()
