@@ -19,3 +19,11 @@ class N5222A:
 
 	def set_freq_f(self,ff):
 		self.instr.write(':SENSE:FREQ:STOP '+str(int(ff)))
+
+	def set_frange_c(self,fc,span):
+		self.set_freq_center(fc)
+		self.set_freq_span(span)
+
+	def set_frange_if(self,fi,ff):
+		self.set_freq_i(fi)
+		self.set_freq_f(ff)
