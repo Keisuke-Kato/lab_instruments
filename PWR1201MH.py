@@ -10,52 +10,52 @@ class PWR1201MH:
 		self.instr.write_termination = '\n'
 
 # voltage
-	def set_voltage(self, voltage):
+	def setVoltage(self, voltage):
 		self.instr.write('VOLT %s' % voltage)
 
-	def get_voltage(self):
+	def getVoltage(self):
 		voltage = self.instr.query_ascii_values('VOLT?')[0]
 		return voltage
 
-	def set_vrange(self, LH): # LH = 'LOW' or 'HIGH'
-		self.instr.write('CURR:EXT:RANG %s' % LH)
+	def setVoltageRange(self, state): # LH = 'LOW' or 'HIGH'
+		self.instr.write('CURR:EXT:RANG %s' % state)
 
-	def get_vrange(self):
-		LH = self.instr.query('CURR:EXT:RANG?')
-		return LH # 'LOW' or 'HIGH'
+	def getVoltageRange(self):
+		state = self.instr.query('CURR:EXT:RANG?')
+		return state # 'LOW' or 'HIGH'
 
 # current
-	def set_current(self, current):
+	def setCurrent(self, current):
 		self.instr.write('CURR %s' % current)
 
-	def get_current(self):
+	def getCurrent(self):
 		current = self.instr.query_ascii_values('CURR?')[0]
 		return current
 
-	def set_current_limit(self, limit):
+	def setCurrentLimit(self, limit):
 		self.instr.write('CURR:PROT %s' % limit)
 
-	def get_current_limit(self):
+	def getCurrentLimit(self):
 		limit = self.instr.query_ascii_values('CURR:PROT?')[0]
 		return limit
 
 # measured output
-	def get_apply_meas(self):
+	def getMeasuredCV(self):
 		current, voltage = self.instr.query_ascii_values('MEAS:ALL?')
 		return current, voltage
 
-	def get_current_meas(self):
+	def getMeasuredCurrent(self):
 		current = self.instr.query_ascii_values('MEAS:CURR?')[0]
 		return current
 
-	def get_voltage_meas(self):
+	def getMeasuredVoltage(self):
 		voltage = self.instr.query_ascii_values('MEAS:VOLT?')[0]
 		return voltage
 
 # output switch
-	def set_output(self, output):
-		self.instr.write('OUTP %s' % output)
+	def setOutputState(self, state):
+		self.instr.write('OUTP %s' % state)
 
-	def get_output(self):
+	def getOutputState(self):
 		state = self.instr.query_ascii_values('OUTP?')[0]
 		return state

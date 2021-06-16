@@ -10,17 +10,17 @@ class N5222A:
 		self.instr.read_termination = '\n'
 		print(self.instr.query('*IDN?'))
 
-	def setStartFreq(self,freq): # unit:GHz
-		self.instr.write('SENS:FREQ:STAR %f' % freq*1e+9)
+	def setStartFreq(self,freq):
+		self.instr.write('SENS:FREQ:STAR %f' % freq)
 
 	def setStopFreq(self,freq):
-		self.instr.write('SENS:FREQ:STOP %f' % freq*1e+9)
+		self.instr.write('SENS:FREQ:STOP %f' % freq)
 
 	def setCenterFreq(self,freq):
-		self.instr.write('SENS:FREQ:CENT %f' % freq*1e+9)
+		self.instr.write('SENS:FREQ:CENT %f' % freq)
 
 	def setFreqSpan(self,freq):
-		self.instr.write('SENS:FREQ:SPAN %f' % freq*1e+9)
+		self.instr.write('SENS:FREQ:SPAN %f' % freq)
 
 	def getStartFreq(self):
 		f = self.instr.query_ascii_values('SENS:FREQ:STAR?')[0]
@@ -45,8 +45,8 @@ class N5222A:
 		n = self.instr.query_ascii_values('SENS:SWE:POIN?')[0]
 		return n
 
-	def setIFBW(self,ifbw): #unit:kHz
-		self.instr.write('SENS:BWID %f' % ifbw*1e+3)
+	def setIFBW(self,ifbw):
+		self.instr.write('SENS:BWID %f' % ifbw)
 
 	def getIFBW(self):
 		ifbw = self.instr.query_ascii_values('SENS:BWID?')[0]
@@ -153,14 +153,14 @@ class N5222A:
 		self.instr.write('CALC:CORR:EDEL %f' % edel)
 
 	def getElectricalDelay(self):
-		edel = self.instr.query_ascii_values('CALC:CORR:EDLE?')[0]
+		edel = self.instr.query_ascii_values('CALC:CORR:EDEL?')[0]
 		return edel
 
 	def setElectricalDelayDistance(self,d): #unit: meter
 		self.instr.write('CALC:CORR:EDEL:DIST %f' % d)
 
 	def getElectricalDelayDistance(self):
-		d = self.instr.query_ascii_values('CALC:CORR:EDLE:DIST?')[0]
+		d = self.instr.query_ascii_values('CALC:CORR:EDEL:DIST?')[0]
 		return d
 
 	def setVelocityFactor(self,v):
