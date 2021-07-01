@@ -10,46 +10,46 @@ class N5222A:
 		self.instr.read_termination = '\n'
 		print(self.instr.query('*IDN?'))
 
-	def setStartFreq(self,freq):
-		self.instr.write('SENS:FREQ:STAR %f' % freq)
+	def setStartFreq(self,freq,ch=1):
+		self.instr.write('SENS%d:FREQ:STAR %f' % (ch,freq))
 
-	def setStopFreq(self,freq):
-		self.instr.write('SENS:FREQ:STOP %f' % freq)
+	def setStopFreq(self,freq,ch=1):
+		self.instr.write('SENS%d:FREQ:STOP %f' % (ch,freq))
 
-	def setCenterFreq(self,freq):
-		self.instr.write('SENS:FREQ:CENT %f' % freq)
+	def setCenterFreq(self,freq,ch=1):
+		self.instr.write('SENS%d:FREQ:CENT %f' % (ch,freq))
 
-	def setFreqSpan(self,freq):
-		self.instr.write('SENS:FREQ:SPAN %f' % freq)
+	def setFreqSpan(self,freq,ch=1):
+		self.instr.write('SENS%d:FREQ:SPAN %f' % (ch,freq))
 
-	def getStartFreq(self):
-		f = self.instr.query_ascii_values('SENS:FREQ:STAR?')[0]
+	def getStartFreq(self,ch=1):
+		f = self.instr.query_ascii_values('SENS%d:FREQ:STAR?' % ch)[0]
 		return f
 
-	def getStopFreq(self):
-		f = self.instr.query_ascii_values('SENS:FREQ:STOP?')[0]
+	def getStopFreq(self,ch=1):
+		f = self.instr.query_ascii_values('SENS%d:FREQ:STOP?' % ch)[0]
 		return f
 
-	def getCenterFreq(self):
-		f = self.instr.query_ascii_values('SENS:FREQ:CENT?')[0]
+	def getCenterFreq(self,ch=1):
+		f = self.instr.query_ascii_values('SENS%d:FREQ:CENT?' % ch)[0]
 		return f
 
-	def getFreqSpan(self):
-		f = self.instr.query_ascii_values('SENS:FREQ:SPAN?')[0]
+	def getFreqSpan(self,ch=1):
+		f = self.instr.query_ascii_values('SENS%d:FREQ:SPAN?' % ch)[0]
 		return f
 
-	def setNumberOfPoints(self,num):
-		self.instr.write('SENS:SWE:POIN %d' % num)
+	def setNumberOfPoints(self,num,ch=1):
+		self.instr.write('SENS%d:SWE:POIN %d' % (ch,num))
 
-	def getNumberOfPoints(self):
-		n = self.instr.query_ascii_values('SENS:SWE:POIN?')[0]
+	def getNumberOfPoints(self,ch=1):
+		n = self.instr.query_ascii_values('SENS%d:SWE:POIN?' % ch)[0]
 		return n
 
-	def setIFBW(self,ifbw):
-		self.instr.write('SENS:BWID %f' % ifbw)
+	def setIFBW(self,ifbw,ch=1):
+		self.instr.write('SENS%d:BWID %f' % (ch,ifbw))
 
-	def getIFBW(self):
-		ifbw = self.instr.query_ascii_values('SENS:BWID?')[0]
+	def getIFBW(self,ch=1):
+		ifbw = self.instr.query_ascii_values('SENS%d:BWID?' % ch)[0]
 		return ifbw
 
 	def setOutputState(self,state): # (ON, OFF)
@@ -59,18 +59,18 @@ class N5222A:
 		state = self.instr.query_ascii_values('OUTP?'[0])
 		return state
 
-	def setOutputPower(self,pow): # unit:dBm
-		self.instr.write('SOUR:POW %f' % pow)
+	def setOutputPower(self,pow,ch=1): # unit:dBm
+		self.instr.write('SOUR%d:POW %f' % (ch,pow))
 
-	def getOutputPower(self):
-		pow = self.instr.query_ascii_values('SOUR:POW?')[0]
+	def getOutputPower(self,ch=1):
+		pow = self.instr.query_ascii_values('SOUR%d:POW?' % ch)[0]
 		return pow
 
-	def setSweepType(self,type): # (LIN, PWR, CW, SEG, PHASE)
-		self.instr.write('SENS:SWE:TYPE %s' % type)
+	def setSweepType(self,type,ch=1): # (LIN, PWR, CW, SEG, PHASE)
+		self.instr.write('SENS%d:SWE:TYPE %s' % (ch,type))
 
-	def getSweepType(self):
-		type = self.instr.query('SENS:SWE:TYPE?')
+	def getSweepType(self,ch=1):
+		type = self.instr.query('SENS%d:SWE:TYPE?' % ch)
 		return type
 
 	def setSegmentSweepState(self,state): # (ON, OFF)
@@ -190,3 +190,12 @@ class N5222A:
 	def getData(self,datapoint='FDATA'):
 		data = self.instr.query_ascii_values('CALC:DATA? %s' % datapoint, container=np.array)
 		return data
+
+	def setTriggerModeContinuous(self,ch=1):
+		self.instr.write('SENS%d:SWE:MODE CONT' % ch)
+
+	def setTriggerModeHold(self,ch=1):
+		self.instr.write('SENS%d:SWE:MODE HOLD' % ch)
+
+	def setTriggerModeSingle(self,ch=1):
+		self.instr.write('SENS%d:SWE:MODE SING' % ch)
